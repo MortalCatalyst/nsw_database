@@ -30,18 +30,22 @@ horse_list = ["number" ,"saddlecloth" "horse" ,"id" ,"blinkers", "trainernumber"
 # Collects attributes of the nomination node.
 # TODO: Need to insert the race_id into each tuple of nomination detail.
 # TODO: Reuse below code with modified horse_list to capture trainer and horse details
+
+# FIXME: At root level in loop. Can take out dict find and get entire horse list.
+        # for k, v in root.items():
+        #     if k == 'rail':
+        #         print(k + ": " + v)
 HORSE_output = []
 try:
     for i in range(1, 12):
-        for race in root[i]:
             for item in horse_list:
-                my_ids = race.get(item)
+                my_ids = (race.get(item))
                 HORSE_output.append(my_ids)
 except IndexError:
     pass
 
 HORSE_output = tuple(HORSE_output)
-print(HORSE_output)
+# print(HORSE_output)
 
 connection = sqlite3.connect("test_database.db")
 c = connection.cursor()
