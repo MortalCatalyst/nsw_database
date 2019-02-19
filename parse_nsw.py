@@ -12,6 +12,8 @@ root = tree.getroot()
 #           'strapper', 'totalprize', 'first', 'second', 'third', 'fourth', 'fifth', 'time', 'bonustype', 'nomsfee', 'acceptfee', 'trackcondition', 'timingmethod', 'fastesttime', 'sectionaltime', 'formavailable', 'racebookprize']
 mylist = ['id', 'number', 'name', 'mediumname', 'stage', 'distance', 'class', 'age', 'grade', 'weightcondition', 'totalprize',
           'first', 'second', 'third', 'fourth', 'fifth', 'time', 'bonustype', 'trackcondition', 'timingmethod', 'fastesttime', 'sectionaltime']
+
+# creates a tuple of the Meeting an Race ID's
 ID_output = []
 try:
     for item in mylist:
@@ -22,6 +24,24 @@ except IndexError:
     pass
 
 ID_output = tuple(ID_output)
+
+horse_list = ["number" ,"saddlecloth" "horse" ,"id" ,"blinkers", "trainernumber" ,"jockeynumber" ,"barrier" ,"weight" ,"rating" ,"description" ,"owners", "dob","age", "sex" ,"career","thistrack" ,"thisdistance", "goodtrack" ,"heavytrack" ,"firstup", "secondup", "finished" ,"weightvariation" ,"variedweight", "decimalmargin" ,"penalty" ,"pricestarting" ]
+
+# Collects attributes of the nomination node.
+# TODO: Need to insert the race_id into each tuple of nomination detail.
+# TODO: Reuse below code with modified horse_list to capture trainer and horse details
+HORSE_output = []
+try:
+    for i in range(1, 12):
+        for race in root[i]:
+            for item in horse_list:
+                my_ids = race.get(item)
+                HORSE_output.append(my_ids)
+except IndexError:
+    pass
+
+HORSE_output = tuple(HORSE_output)
+print(HORSE_output)
 
 connection = sqlite3.connect("test_database.db")
 c = connection.cursor()
