@@ -37,10 +37,10 @@ horse_list = ["number" ,"saddlecloth" "horse" ,"id" ,"blinkers", "trainernumber"
         #         print(k + ": " + v)
 HORSE_output = []
 try:
-    for i in range(1, 12):
-            for item in horse_list:
-                my_ids = (race.get(item))
-                HORSE_output.append(my_ids)
+    # for i in range(1, 12): replace with len list of ids
+        for item in horse_list:
+            my_ids = (race.get(item))
+            HORSE_output.append(my_ids)
 except IndexError:
     pass
 
