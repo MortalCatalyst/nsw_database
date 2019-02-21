@@ -32,6 +32,8 @@ horse_list = ["number" ,"saddlecloth" "horse" ,"id" ,"blinkers", "trainernumber"
 # TODO: Reuse below code with modified horse_list to capture trainer and horse details
 
 # FIXME: At root level in loop. Can take out dict find and get entire horse list.
+# FIXME: Tried to hard to get it in a loop when I can create the list of the ids separately.
+#FIXME: Then replace the for i in range(1,12) with the list of ids to iterate and then append the item from  that loop, Simples.
         # for k, v in root.items():
         #     if k == 'rail':
         #         print(k + ": " + v)
