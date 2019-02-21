@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import xml.etree.ElementTree as ET
+import lxml
 import pandas as pd
 import sqlite3
 
@@ -8,10 +9,44 @@ import sqlite3
 tree = ET.parse('20190215CANT0.xml')
 root = tree.getroot()
 
-# mylist = ['id', 'number', 'nomnumber', 'division', 'name', 'mediumname', 'shortname', 'stage', 'distance', 'minweight', 'raisedweight', 'class', 'age', 'grade', 'weightcondition', 'trophy', 'owner', 'trainer', 'jockey',
-#           'strapper', 'totalprize', 'first', 'second', 'third', 'fourth', 'fifth', 'time', 'bonustype', 'nomsfee', 'acceptfee', 'trackcondition', 'timingmethod', 'fastesttime', 'sectionaltime', 'formavailable', 'racebookprize']
+
 mylist = ['id', 'number', 'name', 'mediumname', 'stage', 'distance', 'class', 'age', 'grade', 'weightcondition', 'totalprize',
           'first', 'second', 'third', 'fourth', 'fifth', 'time', 'bonustype', 'trackcondition', 'timingmethod', 'fastesttime', 'sectionaltime']
+
+# print(ET.tostring(root))
+# Works to generate race info
+for race in root.iter("race"):
+    race_list = []
+    for k,v in race.items():
+        if k in mylist:
+            race_list.append(v)
+    # print(race_list)
+
+horse_list = ["number" ,"saddlecloth" "horse" ,"id" ,"blinkers", "trainernumber" ,"jockeynumber" ,"barrier" ,"weight" ,"rating" ,"description" ,"owners", "dob","age", "sex" ,"career","thistrack" ,"thisdistance", "goodtrack" ,"heavytrack" ,"firstup", "secondup", "finished" ,"weightvariation" ,"variedweight", "decimalmargin" ,"penalty" ,"pricestarting" ]
+
+for item in race_list:
+    for nom in root.iter("nomination"):
+        nom_list = []
+        nom_list.append(race_list[0])
+        for k, v in nom.items():
+            if k in horse_list:
+                nom_list.append(v)
+        # print(nom_list)
+nom_list = []
+
+for item in root.getiterator('race'):
+    id_for_nom = item.get('id')
+    print(id_for_nom)
+    for nom in root.getiterator("nomination"):
+        for k, v in nom.items():
+            if k in horse_list:
+                nom_list.append(v)
+    my_output = (id_for_nom, nom_list)
+    # print(my_output)
+# for elem in root.iter("nomination"):
+#     print(elem.text)
+# mylist = ['id', 'number', 'nomnumber', 'division', 'name', 'mediumname', 'shortname', 'stage', 'distance', 'minweight', 'raisedweight', 'class', 'age', 'grade', 'weightcondition', 'trophy', 'owner', 'trainer', 'jockey',
+#           'strapper', 'totalprize', 'first', 'second', 'third', 'fourth', 'fifth', 'time', 'bonustype', 'nomsfee', 'acceptfee', 'trackcondition', 'timingmethod', 'fastesttime', 'sectionaltime', 'formavailable', 'racebookprize']
 
 RACE_ID_output = []
 try:
@@ -37,7 +72,6 @@ except IndexError:
 
 COMBINED_ID_output = tuple(COMBINED_ID_output)
 
-horse_list = ["number" ,"saddlecloth" "horse" ,"id" ,"blinkers", "trainernumber" ,"jockeynumber" ,"barrier" ,"weight" ,"rating" ,"description" ,"owners", "dob","age", "sex" ,"career","thistrack" ,"thisdistance", "goodtrack" ,"heavytrack" ,"firstup", "secondup", "finished" ,"weightvariation" ,"variedweight", "decimalmargin" ,"penalty" ,"pricestarting" ]
 
 # Collects attributes of the nomination node.
 # TODO: Need to insert the race_id into each tuple of nomination detail.
@@ -51,10 +85,12 @@ horse_list = ["number" ,"saddlecloth" "horse" ,"id" ,"blinkers", "trainernumber"
         #         print(k + ": " + v)
 HORSE_output = []
 try:
-    # for i in range(1, 12): replace with len list of ids
-    for item in horse_list:
-        my_ids = (root.get(item))
-        HORSE_output.append(my_ids)
+    for i in range(1, 12):
+        for item in horse_list:
+            horse_details = []
+            print(root[i].attrib)
+            my_ids = (race_id, horse_details)
+            HORSE_output.append(my_ids)
 except IndexError:
     pass
 
