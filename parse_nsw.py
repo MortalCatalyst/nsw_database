@@ -13,17 +13,29 @@ root = tree.getroot()
 mylist = ['id', 'number', 'name', 'mediumname', 'stage', 'distance', 'class', 'age', 'grade', 'weightcondition', 'totalprize',
           'first', 'second', 'third', 'fourth', 'fifth', 'time', 'bonustype', 'trackcondition', 'timingmethod', 'fastesttime', 'sectionaltime']
 
+RACE_ID_output = []
+try:
+    for item in mylist:
+        for i in range(1, 12):
+            my_ids = int(root[i].get(item))
+            RACE_ID_output.append(my_ids)
+except IndexError:
+    pass
+
+RACE_ID_output = tuple(RACE_ID_output)
+print(RACE_ID_output)
+
 # creates a tuple of the Meeting an Race ID's
-ID_output = []
+COMBINED_ID_output = []
 try:
     for item in mylist:
         for i in range(1, 12):
             my_ids = (int(root.attrib['id']), int(root[i].get(item)))
-            ID_output.append(my_ids)
+            COMBINED_ID_output.append(my_ids)
 except IndexError:
     pass
 
-ID_output = tuple(ID_output)
+COMBINED_ID_output = tuple(COMBINED_ID_output)
 
 horse_list = ["number" ,"saddlecloth" "horse" ,"id" ,"blinkers", "trainernumber" ,"jockeynumber" ,"barrier" ,"weight" ,"rating" ,"description" ,"owners", "dob","age", "sex" ,"career","thistrack" ,"thisdistance", "goodtrack" ,"heavytrack" ,"firstup", "secondup", "finished" ,"weightvariation" ,"variedweight", "decimalmargin" ,"penalty" ,"pricestarting" ]
 
@@ -40,14 +52,14 @@ horse_list = ["number" ,"saddlecloth" "horse" ,"id" ,"blinkers", "trainernumber"
 HORSE_output = []
 try:
     # for i in range(1, 12): replace with len list of ids
-        for item in horse_list:
-            my_ids = (race.get(item))
-            HORSE_output.append(my_ids)
+    for item in horse_list:
+        my_ids = (root.get(item))
+        HORSE_output.append(my_ids)
 except IndexError:
     pass
 
 HORSE_output = tuple(HORSE_output)
-# print(HORSE_output)
+print(HORSE_output)
 
 connection = sqlite3.connect("test_database.db")
 c = connection.cursor()
