@@ -13,6 +13,15 @@ root = tree.getroot()
 mylist = ['id', 'number', 'name', 'mediumname', 'stage', 'distance', 'class', 'age', 'grade', 'weightcondition', 'totalprize',
           'first', 'second', 'third', 'fourth', 'fifth', 'time', 'bonustype', 'trackcondition', 'timingmethod', 'fastesttime', 'sectionaltime']
 
+#################################################################
+# analysis lists
+#################################################################
+horse_list = ["number" ,"saddlecloth" "horse" ,"id" ,"blinkers", "trainernumber" ,"jockeynumber" ,"barrier" ,"weight" ,"rating" ,"description" ,"owners", "dob","age", "sex" ,"career","thistrack" ,"thisdistance", "goodtrack" ,"heavytrack" ,"firstup", "secondup", "finished" ,"weightvariation" ,"variedweight", "decimalmargin" ,"penalty" ,"pricestarting" ]
+short = ["number" ,"saddlecloth","horse" ,"id" ,"blinkers"]
+result = []
+my_tuple = ()
+
+
 # Works to generate race info
 for race in root.iter("race"):
     race_list = []
@@ -21,30 +30,30 @@ for race in root.iter("race"):
             race_list.append(v)
     # print(race_list)
 
-horse_list = ["number" ,"saddlecloth" "horse" ,"id" ,"blinkers", "trainernumber" ,"jockeynumber" ,"barrier" ,"weight" ,"rating" ,"description" ,"owners", "dob","age", "sex" ,"career","thistrack" ,"thisdistance", "goodtrack" ,"heavytrack" ,"firstup", "secondup", "finished" ,"weightvariation" ,"variedweight", "decimalmargin" ,"penalty" ,"pricestarting" ]
-short = ["number" ,"saddlecloth","horse" ,"id" ,"blinkers"]
-result = []
-my_tuple = ()
-
 # Create a list parser to take in optional lists for predefined analysis or database updating
 # Current works as a set list control flow. Next to take in list from a function.
-# TODO: convert to a function
 
-for race in root:
-    race_id = race.attrib.get('id')
-    # print(race_id)
-    for nom in race:
-        if nom.tag == 'nomination':
-            for item in short: #input_list:
-                item = nom.attrib.get(item)
-                result.append(item)
+def parse_noms(listInput):
+    """Function to parse list of different ids """
+    for race in root:
+        race_id = race.attrib.get('id')
+        # print(race_id)
+        for nom in race:
+            if nom.tag == 'nomination':
+                for item in listInput: #input_list:
+                    item = nom.attrib.get(item)
+                    result.append(item)
+    return result
 
 def chunks(l, n):
     """Yield successive n-sized chunks from l."""
     for i in range(0, len(l), n):
         yield tuple(l[i:i + n])
 
-output = (chunks(result,5))
+#######################################################################
+# Choose your list to parse here with the chunk size as second argument
+#######################################################################
+output = (chunks(parse_noms(short),5))
 output_list = []
 for block in output:
     output_list.append(block)
