@@ -22,22 +22,46 @@ for race in root.iter("race"):
     # print(race_list)
 
 horse_list = ["number" ,"saddlecloth" "horse" ,"id" ,"blinkers", "trainernumber" ,"jockeynumber" ,"barrier" ,"weight" ,"rating" ,"description" ,"owners", "dob","age", "sex" ,"career","thistrack" ,"thisdistance", "goodtrack" ,"heavytrack" ,"firstup", "secondup", "finished" ,"weightvariation" ,"variedweight", "decimalmargin" ,"penalty" ,"pricestarting" ]
-
+short = ["number" ,"saddlecloth","horse" ,"id" ,"blinkers"]
 result = []
+my_tuple = ()
 
+# Create a list parser to take in optional lists for predefined analysis or database updating
+# Current works as a set list control flow. Next to take in list from a function.
+# TODO: convert to a function
 
-# Working
 for race in root:
     race_id = race.attrib.get('id')
     # print(race_id)
     for nom in race:
         if nom.tag == 'nomination':
-            number = nom.attrib.get('number')
-            horse = nom.attrib.get('horse')
-            id = nom.attrib.get('id')
-            blinkers = nom.attrib.get('blinkers')
-            result.append((race_id, number, horse, id, blinkers))
-print(result)
+            for item in short: #input_list:
+                item = nom.attrib.get(item)
+                result.append(item)
+
+def chunks(l, n):
+    """Yield successive n-sized chunks from l."""
+    for i in range(0, len(l), n):
+        yield tuple(l[i:i + n])
+
+output = (chunks(result,5))
+output_list = []
+for block in output:
+    output_list.append(block)
+
+print(output_list)
+# Working
+# for race in root:
+#     race_id = race.attrib.get('id')
+#     # print(race_id)
+#     for nom in race:
+#         if nom.tag == 'nomination':
+#             number = nom.attrib.get('number')
+#             horse = nom.attrib.get('horse')
+#             id = nom.attrib.get('id')
+#             blinkers = nom.attrib.get('blinkers')
+#             result.append((race_id, number, horse, id, blinkers))
+# print(result)
 # print(result)
 
 # creates a tuple of the Meeting an Race ID's
