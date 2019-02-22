@@ -72,16 +72,16 @@ for item in root.getiterator('race'):
 # mylist = ['id', 'number', 'nomnumber', 'division', 'name', 'mediumname', 'shortname', 'stage', 'distance', 'minweight', 'raisedweight', 'class', 'age', 'grade', 'weightcondition', 'trophy', 'owner', 'trainer', 'jockey',
 #           'strapper', 'totalprize', 'first', 'second', 'third', 'fourth', 'fifth', 'time', 'bonustype', 'nomsfee', 'acceptfee', 'trackcondition', 'timingmethod', 'fastesttime', 'sectionaltime', 'formavailable', 'racebookprize']
 
-RACE_ID_output = []
-try:
-    for item in mylist:
-        for i in range(1, 12):
-            my_ids = int(root[i].get(item))
-            RACE_ID_output.append(my_ids)
-except IndexError:
-    pass
-
-RACE_ID_output = tuple(RACE_ID_output)
+# RACE_ID_output = []
+# try:
+#     for item in mylist:
+#         for i in range(1, 12):
+#             my_ids = int(root[i].get(item))
+#             RACE_ID_output.append(my_ids)
+# except IndexError:
+#     pass
+#
+# RACE_ID_output = tuple(RACE_ID_output)
 # print(RACE_ID_output)
 
 # creates a tuple of the Meeting an Race ID's
@@ -107,18 +107,18 @@ COMBINED_ID_output = tuple(COMBINED_ID_output)
         # for k, v in root.items():
         #     if k == 'rail':
         #         print(k + ": " + v)
-HORSE_output = []
-try:
-    for i in range(1, 12):
-        for item in horse_list:
-            horse_details = []
-            # print(root[i].attrib)
-            my_ids = (race_id, horse_details)
-            HORSE_output.append(my_ids)
-except IndexError:
-    pass
-
-HORSE_output = tuple(HORSE_output)
+# HORSE_output = []
+# try:
+#     for i in range(1, 12):
+#         for item in horse_list:
+#             horse_details = []
+#             # print(root[i].attrib)
+#             my_ids = (race_id, horse_details)
+#             HORSE_output.append(my_ids)
+# except IndexError:
+#     pass
+#
+# HORSE_output = tuple(HORSE_output)
 # print(HORSE_output)
 
 connection = sqlite3.connect("test_database.db")
