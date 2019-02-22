@@ -24,6 +24,30 @@ for race in root.iter("race"):
 
 horse_list = ["number" ,"saddlecloth" "horse" ,"id" ,"blinkers", "trainernumber" ,"jockeynumber" ,"barrier" ,"weight" ,"rating" ,"description" ,"owners", "dob","age", "sex" ,"career","thistrack" ,"thisdistance", "goodtrack" ,"heavytrack" ,"firstup", "secondup", "finished" ,"weightvariation" ,"variedweight", "decimalmargin" ,"penalty" ,"pricestarting" ]
 
+result = []
+
+# for race in root:
+#     race_id = race.attrib.get('id')
+#     # print(race_id)
+#     for nom in race:
+#         if nom is not None:
+#             list_of_attribs = [nom.attrib.get(x) for x in horse_list]
+#             print((list_of_attribs))
+#             result.append((race_id, list_of_attribs))
+#             print(result)
+
+# Working
+for race in root:
+    race_id = race.attrib.get('id')
+    # print(race_id)
+    for nom in race:
+        if nom.tag == 'nomination':
+            number = nom.attrib.get('number')
+            horse = nom.attrib.get('horse')
+            result.append((race_id, number, horse))
+print(result)
+# print(result)
+
 for item in race_list:
     for nom in root.iter("nomination"):
         nom_list = []
@@ -36,7 +60,7 @@ nom_list = []
 
 for item in root.getiterator('race'):
     id_for_nom = item.get('id')
-    print(id_for_nom)
+    # print(id_for_nom)
     for nom in root.getiterator("nomination"):
         for k, v in nom.items():
             if k in horse_list:
@@ -58,7 +82,7 @@ except IndexError:
     pass
 
 RACE_ID_output = tuple(RACE_ID_output)
-print(RACE_ID_output)
+# print(RACE_ID_output)
 
 # creates a tuple of the Meeting an Race ID's
 COMBINED_ID_output = []
@@ -88,14 +112,14 @@ try:
     for i in range(1, 12):
         for item in horse_list:
             horse_details = []
-            print(root[i].attrib)
+            # print(root[i].attrib)
             my_ids = (race_id, horse_details)
             HORSE_output.append(my_ids)
 except IndexError:
     pass
 
 HORSE_output = tuple(HORSE_output)
-print(HORSE_output)
+# print(HORSE_output)
 
 connection = sqlite3.connect("test_database.db")
 c = connection.cursor()
