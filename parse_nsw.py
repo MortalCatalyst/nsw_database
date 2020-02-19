@@ -6,7 +6,7 @@ import pandas as pd
 import sqlite3
 
 
-tree = ET.parse('20190215CANT0.xml')
+tree = ET.parse('./nsw_database/20190215CANT0.xml')
 root = tree.getroot()
 
 
@@ -58,7 +58,8 @@ output_list = []
 for block in output:
     output_list.append(block)
 
-print(output_list)
+# print(output_list)
+
 # Working
 # for race in root:
 #     race_id = race.attrib.get('id')
@@ -85,17 +86,36 @@ except IndexError:
 
 COMBINED_ID_output = tuple(COMBINED_ID_output)
 
+print(COMBINED_ID_output)
+# print(parse_noms(horse_list))
 
-connection = sqlite3.connect("test_database.db")
-c = connection.cursor()
-c.execute("DROP TABLE IF EXISTS Meeting")
-c.execute(
-    "CREATE TABLE Meeting(PK_Meeting INTEGER PRIMARY KEY AUTOINCREMENT, MeetingID INT, RaceID INT)")
-c.executemany(
-    "INSERT INTO Meeting(MeetingID, RaceID) VALUES(?,?)", ID_output)
-# c.execute("SELECT MeetingID, RaceID from Meeting")
-connection.commit()
-connection.close()
+try:
+    connection = sqlite3.connect("database.db")
+    c = connection.cursor()
+    print("Database created and connection successful")
+    sqlite_select_query = "select sqlite_version();"
+    c.execute(sqlite_select_query)
+    record = c.fetchall()
+    print("Sqlite version is ", record)
+    c.close()
+except sqlite3.Error as error:
+    print("Error while connecting ", error)
+finally:
+    if (connection):
+        connection.close()
+        print("The connection is closed")
+    # c.execute("DROP TABLE IF EXISTS Meeting")
+    # c.execute(
+    #     "CREATE TABLE Meeting(PK_Meeting INTEGER PRIMARY KEY AUTOINCREMENT, MeetingID INT, RaceID INT)")
+    # c.executemany(
+    #     "INSERT INTO Meeting(MeetingID, RaceID) VALUES(?,?)", COMBINED_ID_output)
+    # # c.execute("SELECT MeetingID, RaceID from Meeting")
+    # connection.commit()
+    # connection.close()
+
+
+
+
 # for row in c.fetchall():
 #     print(row)
 
