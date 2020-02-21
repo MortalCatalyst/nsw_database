@@ -79,31 +79,54 @@ COMBINED_ID_output = []
 try:
     for item in mylist:
         for i in range(1, 12):
-            my_ids = (int(root.attrib['id']), int(root[i].get(item)))
+            my_ids = int(root.attrib['id']), int(root[i].get(item))
             COMBINED_ID_output.append(my_ids)
+            # COMBINED_ID_output.append(int(root.attrib['id']))
+            # COMBINED_ID_output.append(int(root[i].get(item)))
+
 except IndexError:
     pass
 
-COMBINED_ID_output = tuple(COMBINED_ID_output)
+# COMBINED_ID_output = tuple(COMBINED_ID_output)
 
 print(COMBINED_ID_output)
 # print(parse_noms(horse_list))
+fake_id = ('5153419', '5178566')
 
-try:
-    connection = sqlite3.connect("database.db")
-    c = connection.cursor()
-    print("Database created and connection successful")
-    sqlite_select_query = "select sqlite_version();"
-    c.execute(sqlite_select_query)
-    record = c.fetchall()
-    print("Sqlite version is ", record)
-    c.close()
-except sqlite3.Error as error:
-    print("Error while connecting ", error)
-finally:
-    if (connection):
-        connection.close()
-        print("The connection is closed")
+def insertRecords(dataList):
+    try:
+        connection = sqlite3.connect("racing_database.db")
+        c = connection.cursor()
+        print("Database created and connection successful")
+        # create_table = '''CREATE TABLE Event (PK_Meeting INTEGER PRIMARY KEY AUTOINCREMENT, MeetingID INT, RaceID INT);'''
+        # c.execute(create_table)
+        # connection.commit()
+        insert_query = """INSERT INTO Event (MeetingID, RaceID) VALUES(?, ?)"""
+        data_tuple = (dataList)
+        c.execute(insert_query, data_tuple)
+        connection.commit()
+        # c.executemany(
+        #     "INSERT INTO Meeting(MeetingID, RaceID) VALUES(?,?)", COMBINED_ID_output)
+  
+        # sqlite_select_query = "select sqlite_version();"
+        # c.execute(sqlite_select_query)
+        # record = c.fetchall()
+        # print("Sqlite version is ", record)
+        c.close()
+    except sqlite3.Error as error:
+        print("Error while connecting ", error)
+    finally:
+        if (connection):
+            connection.close()
+            print("The connection is closed")
+
+def giveID(aList):
+    for item in aList:
+        yield item[0], item[1]
+        
+for item in giveID(COMBINED_ID_output):
+    insertRecords(item)
+# print(giveID(COMBINED_ID_output))
     # c.execute("DROP TABLE IF EXISTS Meeting")
     # c.execute(
     #     "CREATE TABLE Meeting(PK_Meeting INTEGER PRIMARY KEY AUTOINCREMENT, MeetingID INT, RaceID INT)")
